@@ -6,16 +6,3 @@
     height: 800px;
     background-color: #ebecd0;
 }
-
-#chessboard .tile {
-    width: 100px;
-    height: 100px;
-}
-
-#chessboard .black-tile {
-    background-color: rgb(58, 54, 95);
-}
-
-#chessboard .white-title {
-    background-color: #ebecd0;
-}
