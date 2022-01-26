@@ -1,7 +1,7 @@
 import { PieceType, TeamType, Piece } from "../components/Chessboard/Chessboard";
 
 export default class Referee {
-    titleIsOccupied(x: number, y: number, boardState: Piece[]): boolean {
+    tileIsOccupied(x: number, y: number, boardState: Piece[]): boolean {
         const piece = boardState.find(p => p.x === x && p.y === y)
 
         if(piece) {
@@ -11,7 +11,7 @@ export default class Referee {
         }
     }
 
-    TitleIsOccupiedByOpponent(x: number, y: number, boardState: Piece[], team: TeamType): boolean {
+    TileIsOccupiedByOpponent(x: number, y: number, boardState: Piece[], team: TeamType): boolean {
         const piece = boardState.find((p) => p.x === x && p.y === y && p.team !== team);
 
         if(piece) {
@@ -34,11 +34,11 @@ export default class Referee {
 
             //movement logic
             if(px === x && py === specialRow && y - py === 2*pawnDirection) {
-                if(!this.titleIsOccupied(x, y, boardState) && !this.titleIsOccupied(x, y - pawnDirection, boardState)) {
+                if(!this.tileIsOccupied(x, y, boardState) && !this.tileIsOccupied(x, y - pawnDirection, boardState)) {
                     return true;
                 }
             } else if(px === x && y - py === pawnDirection) {
-                if(!this.titleIsOccupied(x, y, boardState)) {
+                if(!this.tileIsOccupied(x, y, boardState)) {
                     return true;
                 }
             }
@@ -46,13 +46,13 @@ export default class Referee {
             else if(x - px === -1 && y - py === pawnDirection) {
                 //attack in upper or bottom left corner
                 console.log("upper / bottom left")
-                if(this.TitleIsOccupiedByOpponent(x, y, boardState, team)) {
+                if(this.TileIsOccupiedByOpponent(x, y, boardState, team)) {
                     return true;
                 }
             } else if(x - px === 1 && y - py === pawnDirection) {
                 //attack in upper or bottom right corner
                 console.log("upper / bottom right");
-                if(this.TitleIsOccupiedByOpponent(x, y, boardState, team)) {
+                if(this.TileIsOccupiedByOpponent(x, y, boardState, team)) {
                     return true;
                 }
             }
