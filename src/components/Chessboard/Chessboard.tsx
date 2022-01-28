@@ -71,13 +71,11 @@ export default function Chessboard() {
 
 		if (activePiece && chessboard) {
 			// subtract grid position from 800 to switch start position to bottom left
-			const x = Math.floor((e.clientX - chessboard.offsetLeft) / 100);
+			const x = Math.floor((e.clientX - chessboard.offsetLeft) / GRID_SIZE);
 			// inverse y axis == switch to Math.ceil
-			const y = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop - 800) / 100));
-
+			const y = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop - 800) / GRID_SIZE));
 			const currentPiece = pieces.find((p) => p.position.x === grabPosition.x && p.position.y === grabPosition.y);
-			const attackedPiece = pieces.find((p) => p.position.x === x && p.position.y === y);
-
+            
 			if (currentPiece) {
 				const validMove = referee.isValidMove(grabPosition.x, grabPosition.y, x, y, currentPiece.type, currentPiece.team, pieces);
 
@@ -159,7 +157,7 @@ export default function Chessboard() {
 			const number = j + i + 2;
             const piece = pieces.find(p => p.position.x === i && p.position.y === j);
             let image = piece ? piece.image : undefined;
-            
+
 			/*even numbers = dark tile
     odd numbers = light tile
     */
