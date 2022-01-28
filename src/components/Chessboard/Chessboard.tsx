@@ -120,10 +120,9 @@ export default function Chessboard() {
 					// if a piece is attacked, remove piece
 					const updatedPieces = pieces.reduce(
 						(results, piece) => {
-                            //special move
 							if (samePosition(piece.position, grabPosition)) {
+                                //special move
                                 piece.enPassant = Math.abs(grabPosition.y - y) === 2 && piece.type === PieceType.PAWN;
-
 								piece.position.x = x;
 								piece.position.y = y;
 								results.push(piece);
