@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import './Chessboard.css';
 import Tile from '../Tile/Tile';
 import Referee from '../../referee/Referee';
-import { verticalAxis, horizontalAxis, Piece, PieceType, TeamType, initialBoardState, Position } from '../../Constants';
+import { VERTICAL_AXIS, HORIZONTAL_AXIS, GRID_SIZE, Piece, PieceType, TeamType, initialBoardState, Position } from '../../Constants';
 
 export default function Chessboard() {
 	const [ activePiece, setActivePiece ] = useState<HTMLElement | null>(null);
@@ -16,11 +16,11 @@ export default function Chessboard() {
 		const chessboard = chessboardRef.current;
 		if (element.classList.contains('chess-piece') && chessboard) {
 			// inverse y axis == switch to Math.ceil
-            const grabX = Math.floor((e.clientX - chessboard.offsetLeft) / 100);
-            const grabY = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop - 800) / 100));
+            const grabX = Math.floor((e.clientX - chessboard.offsetLeft) / GRID_SIZE);
+            const grabY = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop - 800) / GRID_SIZE));
 			setGrabPosition({ x: grabX, y: grabY });
-			const x = e.clientX - 50;
-			const y = e.clientY - 50;
+			const x = e.clientX - GRID_SIZE / 2;
+			const y = e.clientY - GRID_SIZE / 2;
 			element.style.position = 'absolute';
 			element.style.left = `${x}px`; 
 			element.style.top = `${y}px`;
@@ -154,25 +154,18 @@ export default function Chessboard() {
 
 	let board = [];
 
-	for (let j = verticalAxis.length - 1; j >= 0; j--) {
-		for (let i = 0; i < horizontalAxis.length; i++) {
+	for (let j = VERTICAL_AXIS.length - 1; j >= 0; j--) {
+		for (let i = 0; i < HORIZONTAL_AXIS.length; i++) {
 			const number = j + i + 2;
-			let image = undefined;
-
-			pieces.forEach((p) => {
-				if (p.position.x === i && p.position.y === j) {
-					image = p.image;
-				}
-			});
-
+            const piece = pieces.find(p => p.position.x === i && p.position.y === j);
+            let image = piece ? piece.image : undefined;
+            
 			/*even numbers = dark tile
     odd numbers = light tile
     */
-
 			board.push(<Tile key={`${j},${i}`} image={image} number={number} />);
 		}
 	}
-
 	//         if(number % 2 === 0) {
 	//             board.push(<Tile/>);
 	//                 // [{horizontalAxis[i]}{verticalAxis[j]}]
