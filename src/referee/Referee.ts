@@ -34,22 +34,10 @@ export default class Referee {
                 }
             }
         }
-        //if the attacking piece is a pawn [DONE]
-        //upper left / upper right || bottom left / bottom right [DONE]
-        //if a piece is above or under attacked tile [DONE]
-        //if the attacked piece has made an en passant move in the previous turn [DONE]
-
-        //put piece in correct position
-        //remove en passant piece
         return false;
     }
 
     isValidMove(px: number, py: number, x: number, y: number, type: PieceType, team: TeamType, boardState: Piece[]) {
-        // console.log("Referee is checking the move...");
-        // console.log(`Previous location: (${px}, ${py})`);
-        // console.log(`Current location: (${x}, ${y})`);
-        // console.log(`Piece type: (${type})`);
-        // console.log(`Team: (${team})`);
 
         if(type === PieceType.PAWN) {
             const specialRow = (team === TeamType.OUR) ? 1 : 6;
