@@ -127,35 +127,24 @@ export default class Referee {
 			}
 		} else if (type === PieceType.BISHOP) {
 			//movement and attack logic for BISHOP
-
-			//upright movement
 			for (let i = 1; i < 8; i++) {
-				console.log('looping through array');
+                //upright movement
 				if (desiredPosition.x - initialPosition.x === i && desiredPosition.y - initialPosition.y === i) {
 					console.log(`moving top right ${i} squares`);
 					break;
 				}
-			}
-			//bottom right movement
-			for (let i = 1; i < 8; i++) {
-				console.log('looping through array');
-				if (desiredPosition.x - initialPosition.x === i && desiredPosition.y - initialPosition.y === -i) {
+                //bottom right movement
+                if (desiredPosition.x - initialPosition.x === i && desiredPosition.y - initialPosition.y === -i) {
 					console.log(`moving down right ${i} squares`);
 					break;
 				}
-			}
-			//bottom left movement
-			for (let i = 1; i < 8; i++) {
-				console.log('looping through array');
-				if (desiredPosition.x - initialPosition.x === -i && desiredPosition.y - initialPosition.y === -i) {
+                //bottom left movement
+                if (desiredPosition.x - initialPosition.x === -i && desiredPosition.y - initialPosition.y === -i) {
 					console.log(`moving down left ${i} squares`);
 					break;
 				}
-			}
-			//top left movement
-			for (let i = 1; i < 8; i++) {
-				console.log('looping through array');
-				if (desiredPosition.x - initialPosition.x === i && desiredPosition.y - initialPosition.y === i) {
+                //top left movement
+                if (desiredPosition.x - initialPosition.x === i && desiredPosition.y - initialPosition.y === i) {
 					console.log(`moving top left ${i} squares`);
 					break;
 				}
