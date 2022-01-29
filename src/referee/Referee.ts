@@ -2,7 +2,7 @@ import { PieceType, TeamType, Piece, Position, samePosition } from '../Constants
 
 export default class Referee {
 	tileIsEmptyOrOccupiedByOpponent(position: Position, boardState: Piece[], team: TeamType) {
-        return(!this.tileIsOccupied(position, boardState) || this.tileIsOccupiedByOpponent(position, boardState, team))
+		return !this.tileIsOccupied(position, boardState) || this.tileIsOccupiedByOpponent(position, boardState, team);
 	}
 	tileIsOccupied(position: Position, boardState: Piece[]): boolean {
 		const piece = boardState.find((p) => samePosition(p.position, position));
@@ -111,18 +111,53 @@ export default class Referee {
 					if (desiredPosition.y - initialPosition.y === 2 * i) {
 						if (desiredPosition.x - initialPosition.x === j) {
 							if (this.tileIsEmptyOrOccupiedByOpponent(desiredPosition, boardState, team)) {
-                                return true;
+								return true;
 							}
 						}
 					}
 					//right and left movement
 					if (desiredPosition.x - initialPosition.x === 2 * i) {
 						if (desiredPosition.y - initialPosition.y === j) {
-                            if (this.tileIsEmptyOrOccupiedByOpponent(desiredPosition, boardState, team)) {
-                                return true;
+							if (this.tileIsEmptyOrOccupiedByOpponent(desiredPosition, boardState, team)) {
+								return true;
 							}
 						}
 					}
+				}
+			}
+		} else if (type === PieceType.BISHOP) {
+			//movement and attack logic for BISHOP
+
+			//upright movement
+			for (let i = 1; i < 8; i++) {
+				console.log('looping through array');
+				if (desiredPosition.x - initialPosition.x === i && desiredPosition.y - initialPosition.y === i) {
+					console.log(`moving top right ${i} squares`);
+					break;
+				}
+			}
+			//bottom right movement
+			for (let i = 1; i < 8; i++) {
+				console.log('looping through array');
+				if (desiredPosition.x - initialPosition.x === i && desiredPosition.y - initialPosition.y === -i) {
+					console.log(`moving down right ${i} squares`);
+					break;
+				}
+			}
+			//bottom left movement
+			for (let i = 1; i < 8; i++) {
+				console.log('looping through array');
+				if (desiredPosition.x - initialPosition.x === -i && desiredPosition.y - initialPosition.y === -i) {
+					console.log(`moving down left ${i} squares`);
+					break;
+				}
+			}
+			//top left movement
+			for (let i = 1; i < 8; i++) {
+				console.log('looping through array');
+				if (desiredPosition.x - initialPosition.x === i && desiredPosition.y - initialPosition.y === i) {
+					console.log(`moving top left ${i} squares`);
+					break;
 				}
 			}
 		}
