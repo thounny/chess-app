@@ -132,14 +132,15 @@ export default class Referee {
                 //upright movement
                 if(desiredPosition.x > initialPosition.x && desiredPosition.y > initialPosition.y) {
                     let passedPosition: Position = {x: initialPosition.x + i, y: initialPosition.y + i};
+					if(passedPosition.x === desiredPosition.x && passedPosition.y === desiredPosition.y) {
+						console.log("same passed and desired positions");
+						return true;
+					}
                     if(this.tileIsOccupied(passedPosition, boardState)) {
                         console.log("illegal move");
                         break;
                     }
                 }
-				if (desiredPosition.x - initialPosition.x === i && desiredPosition.y - initialPosition.y === i) {
-					return true;
-				}
                 //bottom right movement
                 if(desiredPosition.x > initialPosition.x && desiredPosition.y < initialPosition.y) {
                     let passedPosition: Position = {x: initialPosition.x + i, y: initialPosition.y - i};
