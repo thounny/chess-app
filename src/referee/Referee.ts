@@ -132,17 +132,17 @@ export default class Referee {
                 //upright movement
                 if(desiredPosition.x > initialPosition.x && desiredPosition.y > initialPosition.y) {
                     let passedPosition: Position = {x: initialPosition.x + i, y: initialPosition.y + i};
-					//check if passed tile is occupied
-					if(this.tileIsOccupied(passedPosition, boardState)) {
-						//is it occupied by opponent ???
-						if(this.tileIsOccupiedByOpponent(passedPosition, boardState, team) && passedPosition.x === desiredPosition.x && passedPosition.y === desiredPosition.y) {
+					//check if the tile is the desired tile
+					if(passedPosition.x === desiredPosition.x && passedPosition.y === desiredPosition.y) {
+						//dealing with desired tile
+						if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
 							return true;
-						} else {
+						}
+					} else {
+						//dealing with passing tile
+						if(this.tileIsOccupied(passedPosition, boardState)) {
 							break;
 						}
-                    }
-					if(passedPosition.x === desiredPosition.x && passedPosition.y === desiredPosition.y) {
-						return true;
 					}
                 }
                 //bottom right movement
