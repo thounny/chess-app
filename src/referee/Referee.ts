@@ -155,7 +155,7 @@ export default class Referee {
 						}
 					} else {
 						if (this.tileIsOccupied(passedPosition, boardState)) {
-							return true;
+							break;
 						}
 					}
 				}
@@ -170,7 +170,7 @@ export default class Referee {
 						}
 					} else {
 						if (this.tileIsOccupied(passedPosition, boardState)) {
-							return true;
+							break;
 						}
 					}
 				}
@@ -186,11 +186,13 @@ export default class Referee {
 						}
 					} else {
 						if (this.tileIsOccupied(passedPosition, boardState)) {
-							return true;
+							break;
 						}
 					}
 				}
 			}
+		} else if(type === PieceType.ROOK) {
+			console.log("Rook");
 		}
 		return false;
 	}
