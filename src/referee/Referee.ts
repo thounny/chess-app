@@ -200,8 +200,13 @@ export default class Referee {
 
 					let passedPosition: Position = { x: initialPosition.x, y: desiredPosition.y + i * multiplier };
 					if (passedPosition.x === desiredPosition.x && passedPosition.y === desiredPosition.y) {
-						console.log('arrived');
-						break;
+						if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+							return true;
+						}
+					} else {
+						if(this.tileIsOccupied(passedPosition, boardState)) {
+							break;
+						}
 					}
 				}
 			}
@@ -213,8 +218,13 @@ export default class Referee {
 
 					let passedPosition: Position = { x: initialPosition.x + i * multiplier, y: initialPosition.y };
 					if (passedPosition.x === desiredPosition.x && passedPosition.y === desiredPosition.y) {
-						console.log('arrived');
-						break;
+						if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+							return true;	
+						}
+					} else {
+						if(this.tileIsOccupied(passedPosition, boardState)) {
+							break;
+						}
 					}
 				}
 			}
