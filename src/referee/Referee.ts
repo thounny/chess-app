@@ -54,14 +54,7 @@ export default class Referee {
 		return false;
 	}
 
-	isValidMove(
-		initialPosition: Position,
-		desiredPosition: Position,
-		type: PieceType,
-		team: TeamType,
-		boardState: Piece[]
-	) {
-		if (type === PieceType.PAWN) {
+	pawnMove(initialPosition: Position, desiredPosition: Position, team: TeamType, boardState: Piece[]): boolean {
 			const specialRow = team === TeamType.OUR ? 1 : 6;
 			const pawnDirection = team === TeamType.OUR ? 1 : -1;
 
@@ -104,7 +97,10 @@ export default class Referee {
 					return true;
 				}
 			}
-		} else if (type === PieceType.KNIGHT) {
+			return false;
+	}
+
+	knightMove(initialPosition: Position, desiredPosition: Position, team: TeamType, boardState: Piece[]): boolean {
 			for (let i = -1; i < 2; i += 2) {
 				for (let j = -1; j < 2; j += 2) {
 					//top and bottom movement
@@ -125,7 +121,10 @@ export default class Referee {
 					}
 				}
 			}
-		} else if (type === PieceType.BISHOP) {
+			return false;
+	}
+
+	bishopMove(initialPosition: Position, desiredPosition: Position, team: TeamType, boardState: Piece[]): boolean {
 			//movement and attack logic for BISHOP
 			for (let i = 1; i < 8; i++) {
 				//upright movement
@@ -191,7 +190,10 @@ export default class Referee {
 					}
 				}
 			}
-		} else if (type === PieceType.ROOK) {
+			return false;
+	}
+
+	rookMove(initialPosition: Position, desiredPosition: Position, team: TeamType, boardState: Piece[]): boolean {
 			if (initialPosition.x === desiredPosition.x) {
 				console.log('moving vertically');
 
@@ -228,7 +230,30 @@ export default class Referee {
 					}
 				}
 			}
-		}
 		return false;
+}
+
+
+
+	isValidMove(
+		initialPosition: Position,
+		desiredPosition: Position,
+		type: PieceType,
+		team: TeamType,
+		boardState: Piece[]
+	) {
+		switch(type) {
+			case PieceType.PAWN:
+				this.pawnMove(initialPosition, desiredPosition, team, boardState);
+				break;
+			case PieceType.KNIGHT:
+				this.knightMove(initialPosition, desiredPosition, team, boardState);
+				break;
+			case PieceType.BISHOP:
+				this.bishopMove(initialPosition, desiredPosition, team, boardState);
+				break;
+			case PieceType.ROOK:
+				this.rookMove(initialPosition, desiredPosition, team, boardState);
+		}
 	}
 }
