@@ -39,7 +39,7 @@ export const initialBoardState: Piece[] = [
 		image: `assets/images/B_Rook.png`,
 		position: {
 			x: 0,
-			y: 7
+			y: 7,
 		},
 		type: PieceType.ROOK,
 		team: TeamType.OPPONENT
@@ -48,7 +48,7 @@ export const initialBoardState: Piece[] = [
 		image: `assets/images/B_Knight.png`,
 		position: {
 			x: 1,
-			y: 7
+			y: 7,
 		},
 		type: PieceType.KNIGHT,
 		team: TeamType.OPPONENT
@@ -57,7 +57,7 @@ export const initialBoardState: Piece[] = [
 		image: `assets/images/B_Bishop.png`,
 		position: {
 			x: 2,
-			y: 7
+			y: 7,
 		},
 		type: PieceType.BISHOP,
 		team: TeamType.OPPONENT
@@ -66,7 +66,7 @@ export const initialBoardState: Piece[] = [
 		image: `assets/images/B_Queen.png`,
 		position: {
 			x: 3,
-			y: 7
+			y: 7,
 		},
 		type: PieceType.QUEEN,
 		team: TeamType.OPPONENT
@@ -75,7 +75,7 @@ export const initialBoardState: Piece[] = [
 		image: `assets/images/B_King.png`,
 		position: {
 			x: 4,
-			y: 7
+			y: 7,
 		},
 		type: PieceType.KING,
 		team: TeamType.OPPONENT
@@ -84,7 +84,7 @@ export const initialBoardState: Piece[] = [
 		image: `assets/images/B_Bishop.png`,
 		position: {
 			x: 5,
-			y: 7
+			y: 7,
 		},
 		type: PieceType.BISHOP,
 		team: TeamType.OPPONENT
