@@ -231,9 +231,55 @@ export default class Referee {
 	}
 
 	queenMove(initialPosition: Position, desiredPosition: Position, team: TeamType, boardState: Piece[]): boolean {
+		for (let i = 1; i < 8; i++) {
+			// vertical movement
+			if (desiredPosition.x === initialPosition.x) {
+				let multiplier = (desiredPosition.y < initialPosition.y) ? -1 : 1;
+				let passedPosition: Position = { x: initialPosition.x, y: initialPosition.y + (i * multiplier)};
+				if (samePosition(passedPosition, desiredPosition)) {
+					if (this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+						return true;
+					}
+				} else {
+					if (this.tileIsOccupied(passedPosition, boardState)) {
+						break;
+					}
+				}
+			}
+			// horizontal movement
+			if (desiredPosition.y === initialPosition.y) {
+				let multiplier = (desiredPosition.y < initialPosition.y) ? -1 : 1;
+				let passedPosition: Position = { x: initialPosition.x + (i * multiplier), y: initialPosition.y };
+				if (samePosition(passedPosition, desiredPosition)) {
+					if (this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+						return true;
+					}
+				} else {
+					if (this.tileIsOccupied(passedPosition, boardState)) {
+						break;
+					}
+				}
+			}
+
+			// top right
+			if (desiredPosition.y > initialPosition.y && desiredPosition.x > initialPosition.x) {
+				console.log('moving top right');
+			}
+			// bottom right
+			if (desiredPosition.y < initialPosition.y && desiredPosition.x > initialPosition.x) {
+				console.log('moving bottom right');
+			}
+			// bottom left
+			if (desiredPosition.y < initialPosition.y && desiredPosition.x < initialPosition.x) {
+				console.log('moving bottom left');
+			}
+			// top left
+			if (desiredPosition.y > initialPosition.y && desiredPosition.x < initialPosition.x) {
+				console.log('moving top left');
+			}
+		}
 		return false;
 	}
-
 
 	isValidMove(
 		initialPosition: Position,
@@ -259,7 +305,7 @@ export default class Referee {
 				this.queenMove(initialPosition, desiredPosition, team, boardState);
 				break;
 			case PieceType.KING:
-				//function for King piece
+			//function for King piece
 		}
 	}
 }
