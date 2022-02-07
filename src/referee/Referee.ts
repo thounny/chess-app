@@ -232,43 +232,36 @@ export default class Referee {
 
 	queenMove(initialPosition: Position, desiredPosition: Position, team: TeamType, boardState: Piece[]): boolean {
 		for (let i = 1; i < 8; i++) {
-			// vertical movement
-			if (desiredPosition.x === initialPosition.x) {
-				let multiplier = desiredPosition.y < initialPosition.y ? -1 : 1;
-				let passedPosition: Position = { x: initialPosition.x, y: initialPosition.y + i * multiplier };
-				if (samePosition(passedPosition, desiredPosition)) {
-					if (this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
-						return true;
-					}
-				} else {
-					if (this.tileIsOccupied(passedPosition, boardState)) {
-						break;
-					}
-				}
-			}
-			// horizontal movement
-			if (desiredPosition.y === initialPosition.y) {
-				let multiplier = desiredPosition.y < initialPosition.y ? -1 : 1;
-				let passedPosition: Position = { x: initialPosition.x + i * multiplier, y: initialPosition.y };
-				if (samePosition(passedPosition, desiredPosition)) {
-					if (this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
-						return true;
-					}
-				} else {
-					if (this.tileIsOccupied(passedPosition, boardState)) {
-						break;
-					}
-				}
-			}
+			// all movements
+			let multiplierX; // = desiredPosition.x < initialPosition.x ? -1 : 1;
+			let multiplierY; // = desiredPosition.y < initialPosition.y ?
 
-			// diagonal movement
-			let multiplierX = desiredPosition.x < initialPosition.x ? -1 : 1;
-			let multiplierY = desiredPosition.y < initialPosition.y ? -1 : 1;
+			if(desiredPosition.x < initialPosition.x) {
+				multiplierX = -1;
+			} else if(desiredPosition.x > initialPosition.x) {
+				multiplierX = 1;
+			} else {
+				// X value DOES NOT CHANGE
+				multiplierX = 0;
+			}
+			
+			if(desiredPosition.y < initialPosition.y) {
+				multiplierY = -1;
+			} else if(desiredPosition.y > initialPosition.y) {
+				multiplierY = 1;
+			} else {
+				// Y value DOES NOT CHANGE
+				multiplierY = 0;
+			}
 
 			let passedPosition: Position = {
 				x: initialPosition.x + i * multiplierX,
 				y: desiredPosition.y + i * multiplierY
 			};
+
+			//initialPosition.x + (i * -1) [LEFT]
+			//initialPosition.x + (i * 1) [RIGHT]
+			//initialPosition.x + (i * 0) [MIDDLE]
 
 			if (samePosition(passedPosition, desiredPosition)) {
 				if (this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
