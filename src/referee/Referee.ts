@@ -264,18 +264,63 @@ export default class Referee {
 			// top right
 			if (desiredPosition.y > initialPosition.y && desiredPosition.x > initialPosition.x) {
 				console.log('moving top right');
+				let passedPosition: Position = {x: initialPosition.x + i, y: desiredPosition.y + i};
+
+				if(samePosition(passedPosition, desiredPosition)) {
+					if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+						return true;
+					}
+				} else {
+					if(this.tileIsOccupied(passedPosition, boardState)) {
+						break;
+					}
+				}
 			}
+
 			// bottom right
 			if (desiredPosition.y < initialPosition.y && desiredPosition.x > initialPosition.x) {
 				console.log('moving bottom right');
+				let passedPosition: Position = {x: initialPosition.x + i, y: desiredPosition.y - i};
+
+				if(samePosition(passedPosition, desiredPosition)) {
+					if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+						return true;
+					}
+				} else {
+					if(this.tileIsOccupied(passedPosition, boardState)) {
+						break;
+					}
+				}
 			}
 			// bottom left
 			if (desiredPosition.y < initialPosition.y && desiredPosition.x < initialPosition.x) {
 				console.log('moving bottom left');
+				let passedPosition: Position = {x: initialPosition.x - i, y: desiredPosition.y - i};
+
+				if(samePosition(passedPosition, desiredPosition)) {
+					if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+						return true;
+					}
+				} else {
+					if(this.tileIsOccupied(passedPosition, boardState)) {
+						break;
+					}
+				}
 			}
 			// top left
 			if (desiredPosition.y > initialPosition.y && desiredPosition.x < initialPosition.x) {
 				console.log('moving top left');
+				let passedPosition: Position = {x: initialPosition.x - i, y: desiredPosition.y + i};
+
+				if(samePosition(passedPosition, desiredPosition)) {
+					if(this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+						return true;
+					}
+				} else {
+					if(this.tileIsOccupied(passedPosition, boardState)) {
+						break;
+					}
+				}
 			}
 		}
 		return false;
