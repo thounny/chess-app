@@ -80,7 +80,6 @@ export default class Referee {
 		) {
 			//attack logic
 			//attack in upper or bottom left corner
-			console.log('upper / bottom left');
 			if (this.tileIsOccupiedByOpponent(desiredPosition, boardState, team)) {
 				return true;
 			}
@@ -89,7 +88,6 @@ export default class Referee {
 			desiredPosition.y - initialPosition.y === pawnDirection
 		) {
 			//attack in upper or bottom right corner
-			console.log('upper / bottom right');
 			if (this.tileIsOccupiedByOpponent(desiredPosition, boardState, team)) {
 				return true;
 			}
@@ -192,8 +190,6 @@ export default class Referee {
 
 	rookMove(initialPosition: Position, desiredPosition: Position, team: TeamType, boardState: Piece[]): boolean {
 		if (initialPosition.x === desiredPosition.x) {
-			console.log('moving vertically');
-
 			for (let i = 1; i < 8; i++) {
 				let multiplier = desiredPosition.y < initialPosition.y ? -1 : 1;
 
@@ -210,8 +206,6 @@ export default class Referee {
 			}
 		}
 		if (initialPosition.y === desiredPosition.y) {
-			console.log('moving horizontally');
-
 			for (let i = 1; i < 8; i++) {
 				let multiplier = desiredPosition.x < initialPosition.x ? -1 : 1;
 
