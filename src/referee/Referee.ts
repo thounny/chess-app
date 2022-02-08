@@ -282,6 +282,19 @@ export default class Referee {
 		return false;
 	}
 
+
+
+//TODO LIST
+// pawn promotion
+// castling rook and king
+// prevent king from danger
+// add check for king
+// add ending of game [CHECKMATE]
+// stalemate of game [you don fucked up boi]
+// and some nice ui and maybe webamp player for epic fortnite dance music nah mean
+
+
+
 	isValidMove(
 		initialPosition: Position,
 		desiredPosition: Position,
