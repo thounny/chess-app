@@ -276,6 +276,12 @@ export default class Referee {
 		return false;
 	}
 
+	kingMove(initialPosition: Position, desiredPosition: Position, team: TeamType, boardState: Piece[]): boolean {
+		console.log("king is moving aha");
+		
+		return false;
+	}
+
 	isValidMove(
 		initialPosition: Position,
 		desiredPosition: Position,
@@ -300,7 +306,8 @@ export default class Referee {
 				this.queenMove(initialPosition, desiredPosition, team, boardState);
 				break;
 			case PieceType.KING:
-			//function for King piece
+				this.kingMove(initialPosition, desiredPosition, team, boardState);
+				// LAST CASE SO NO BREAK NO NO
 		}
 	}
 }
