@@ -19,3 +19,7 @@ export const tileIsOccupiedByOpponent = (position: Position, boardState: Piece[]
         return false;
     }
 }
+
+export const tileIsEmptyOrOccupiedByOpponent = (position: Position, boardState: Piece[], team: TeamType) => {
+    return !tileIsOccupied(position, boardState) || tileIsOccupiedByOpponent(position, boardState, team);
+}
