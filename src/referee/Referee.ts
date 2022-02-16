@@ -1,27 +1,10 @@
 import { PieceType, TeamType, Piece, Position, samePosition } from '../Constants';
+import { tileIsOccupied, tileIsOccupiedByOpponent } from './rules/GeneralRules';
+import { pawnMove } from "./rules/PawnRules";
 
 export default class Referee {
 	tileIsEmptyOrOccupiedByOpponent(position: Position, boardState: Piece[], team: TeamType) {
-		return !this.tileIsOccupied(position, boardState) || this.tileIsOccupiedByOpponent(position, boardState, team);
-	}
-	tileIsOccupied(position: Position, boardState: Piece[]): boolean {
-		const piece = boardState.find((p) => samePosition(p.position, position));
-
-		if (piece) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	tileIsOccupiedByOpponent(position: Position, boardState: Piece[], team: TeamType): boolean {
-		const piece = boardState.find((p) => samePosition(p.position, position) && p.team !== team);
-
-		if (piece) {
-			return true;
-		} else {
-			return false;
-		}
+		return !tileIsOccupied(position, boardState) || tileIsOccupiedByOpponent(position, boardState, team);
 	}
 
 	isEnPassantMove(
@@ -49,47 +32,6 @@ export default class Referee {
 				if (piece) {
 					return true;
 				}
-			}
-		}
-		return false;
-	}
-
-	pawnMove(initialPosition: Position, desiredPosition: Position, team: TeamType, boardState: Piece[]): boolean {
-		const specialRow = team === TeamType.OUR ? 1 : 6;
-		const pawnDirection = team === TeamType.OUR ? 1 : -1;
-
-		//movement logic
-		if (
-			initialPosition.x === desiredPosition.x &&
-			initialPosition.y === specialRow &&
-			desiredPosition.y - initialPosition.y === 2 * pawnDirection
-		) {
-			if (
-				!this.tileIsOccupied(desiredPosition, boardState) &&
-				!this.tileIsOccupied({ x: desiredPosition.x, y: desiredPosition.y - pawnDirection }, boardState)
-			) {
-				return true;
-			}
-		} else if (initialPosition.x === desiredPosition.x && desiredPosition.y - initialPosition.y === pawnDirection) {
-			if (!this.tileIsOccupied(desiredPosition, boardState)) {
-				return true;
-			}
-		} else if (
-			desiredPosition.x - initialPosition.x === -1 &&
-			desiredPosition.y - initialPosition.y === pawnDirection
-		) {
-			//attack logic
-			//attack in upper or bottom left corner
-			if (this.tileIsOccupiedByOpponent(desiredPosition, boardState, team)) {
-				return true;
-			}
-		} else if (
-			desiredPosition.x - initialPosition.x === 1 &&
-			desiredPosition.y - initialPosition.y === pawnDirection
-		) {
-			//attack in upper or bottom right corner
-			if (this.tileIsOccupiedByOpponent(desiredPosition, boardState, team)) {
-				return true;
 			}
 		}
 		return false;
@@ -133,7 +75,7 @@ export default class Referee {
 					}
 				} else {
 					//dealing with passing tile
-					if (this.tileIsOccupied(passedPosition, boardState)) {
+					if (tileIsOccupied(passedPosition, boardState)) {
 						break;
 					}
 				}
@@ -148,7 +90,7 @@ export default class Referee {
 						return true;
 					}
 				} else {
-					if (this.tileIsOccupied(passedPosition, boardState)) {
+					if (tileIsOccupied(passedPosition, boardState)) {
 						break;
 					}
 				}
@@ -163,7 +105,7 @@ export default class Referee {
 						return true;
 					}
 				} else {
-					if (this.tileIsOccupied(passedPosition, boardState)) {
+					if (tileIsOccupied(passedPosition, boardState)) {
 						break;
 					}
 				}
@@ -179,7 +121,7 @@ export default class Referee {
 						return true;
 					}
 				} else {
-					if (this.tileIsOccupied(passedPosition, boardState)) {
+					if (tileIsOccupied(passedPosition, boardState)) {
 						break;
 					}
 				}
@@ -199,7 +141,7 @@ export default class Referee {
 						return true;
 					}
 				} else {
-					if (this.tileIsOccupied(passedPosition, boardState)) {
+					if (tileIsOccupied(passedPosition, boardState)) {
 						break;
 					}
 				}
@@ -215,7 +157,7 @@ export default class Referee {
 						return true;
 					}
 				} else {
-					if (this.tileIsOccupied(passedPosition, boardState)) {
+					if (tileIsOccupied(passedPosition, boardState)) {
 						break;
 					}
 				}
@@ -245,7 +187,7 @@ export default class Referee {
 					return true;
 				}
 			} else {
-				if (this.tileIsOccupied(passedPosition, boardState)) {
+				if (tileIsOccupied(passedPosition, boardState)) {
 					break;
 				}
 			}
@@ -274,7 +216,7 @@ export default class Referee {
 					return true;
 				}
 			} else {
-				if (this.tileIsOccupied(passedPosition, boardState)) {
+				if (tileIsOccupied(passedPosition, boardState)) {
 					break;
 				}
 			}
@@ -304,7 +246,7 @@ export default class Referee {
 	) {
 		switch (type) {
 			case PieceType.PAWN:
-				this.pawnMove(initialPosition, desiredPosition, team, boardState);
+				pawnMove(initialPosition, desiredPosition, team, boardState);
 				break;
 			case PieceType.KNIGHT:
 				this.knightMove(initialPosition, desiredPosition, team, boardState);
