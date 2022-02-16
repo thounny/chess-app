@@ -45,7 +45,7 @@ export default class Referee {
 // add check for king
 // add ending of game [CHECKMATE]
 // stalemate of game [you don fucked up boi]
-// and some nice ui and maybe webamp player for epic fortnite dance music nah mean
+// and some nice UI and maybe webamp player for epic fortnite dance music nah mean
 
 	isValidMove(
 		initialPosition: Position,
