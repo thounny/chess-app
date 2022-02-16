@@ -1,0 +1,31 @@
+import { Piece, Position, samePosition, TeamType } from "../../Constants";
+import { tileIsEmptyOrOccupiedByOpponent, tileIsOccupied } from "./GeneralRules";
+
+export const queenMove = (initialPosition: Position, desiredPosition: Position, team: TeamType, boardState: Piece[]): boolean => {
+    for (let i = 1; i < 8; i++) {
+        // all movements
+        let multiplierX = (desiredPosition.x < initialPosition.x) ? -1 : (desiredPosition.x > initialPosition.x) ? 1 : 0;
+        // let multiplierX = (false) ? "true" : (true) ? "true" : "false";
+        let multiplierY = (desiredPosition.y < initialPosition.y) ? -1 : (desiredPosition.y > initialPosition.y) ? 1 : 0; 
+
+        let passedPosition: Position = {
+            x: initialPosition.x + i * multiplierX,
+            y: desiredPosition.y + i * multiplierY
+        };
+
+        //initialPosition.x + (i * -1) [LEFT]
+        //initialPosition.x + (i * 1) [RIGHT]
+        //initialPosition.x + (i * 0) [MIDDLE]
+
+        if (samePosition(passedPosition, desiredPosition)) {
+            if (tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+                return true;
+            }
+        } else {
+            if (tileIsOccupied(passedPosition, boardState)) {
+                break;
+            }
+        }
+    }		
+    return false;
+}
