@@ -1,12 +1,9 @@
 import { PieceType, TeamType, Piece, Position, samePosition } from '../Constants';
-import { tileIsOccupied, tileIsOccupiedByOpponent } from './rules/GeneralRules';
+import { tileIsEmptyOrOccupiedByOpponent, tileIsOccupied, tileIsOccupiedByOpponent } from './rules/GeneralRules';
+import { knightMove } from './rules/KnightRules';
 import { pawnMove } from "./rules/PawnRules";
 
 export default class Referee {
-	tileIsEmptyOrOccupiedByOpponent(position: Position, boardState: Piece[], team: TeamType) {
-		return !tileIsOccupied(position, boardState) || tileIsOccupiedByOpponent(position, boardState, team);
-	}
-
 	isEnPassantMove(
 		initialPosition: Position,
 		desiredPosition: Position,
@@ -37,30 +34,6 @@ export default class Referee {
 		return false;
 	}
 
-	knightMove(initialPosition: Position, desiredPosition: Position, team: TeamType, boardState: Piece[]): boolean {
-		for (let i = -1; i < 2; i += 2) {
-			for (let j = -1; j < 2; j += 2) {
-				//top and bottom movement
-				if (desiredPosition.y - initialPosition.y === 2 * i) {
-					if (desiredPosition.x - initialPosition.x === j) {
-						if (this.tileIsEmptyOrOccupiedByOpponent(desiredPosition, boardState, team)) {
-							return true;
-						}
-					}
-				}
-				//right and left movement
-				if (desiredPosition.x - initialPosition.x === 2 * i) {
-					if (desiredPosition.y - initialPosition.y === j) {
-						if (this.tileIsEmptyOrOccupiedByOpponent(desiredPosition, boardState, team)) {
-							return true;
-						}
-					}
-				}
-			}
-		}
-		return false;
-	}
-
 	bishopMove(initialPosition: Position, desiredPosition: Position, team: TeamType, boardState: Piece[]): boolean {
 		//movement and attack logic for BISHOP
 		for (let i = 1; i < 8; i++) {
@@ -70,7 +43,7 @@ export default class Referee {
 				//check if the tile is the desired tile
 				if (samePosition(passedPosition, desiredPosition)) {
 					//dealing with desired tile
-					if (this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+					if (tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
 						return true;
 					}
 				} else {
@@ -86,7 +59,7 @@ export default class Referee {
 				//check if title is desired tile
 				if (samePosition(passedPosition, desiredPosition)) {
 					//dealing with desired tile
-					if (this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+					if (tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
 						return true;
 					}
 				} else {
@@ -101,7 +74,7 @@ export default class Referee {
 				//check if title is desired tile
 				if (samePosition(passedPosition, desiredPosition)) {
 					//dealing with desired tile
-					if (this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+					if (tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
 						return true;
 					}
 				} else {
@@ -117,7 +90,7 @@ export default class Referee {
 				//check if title is desired tile
 				if (samePosition(passedPosition, desiredPosition)) {
 					//dealing with desired tile
-					if (this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+					if (tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
 						return true;
 					}
 				} else {
@@ -137,7 +110,7 @@ export default class Referee {
 
 				let passedPosition: Position = { x: initialPosition.x, y: desiredPosition.y + i * multiplier };
 				if (samePosition(passedPosition, desiredPosition)) {
-					if (this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+					if (tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
 						return true;
 					}
 				} else {
@@ -153,7 +126,7 @@ export default class Referee {
 
 				let passedPosition: Position = { x: initialPosition.x + i * multiplier, y: initialPosition.y };
 				if (samePosition(passedPosition, desiredPosition)) {
-					if (this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+					if (tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
 						return true;
 					}
 				} else {
@@ -183,7 +156,7 @@ export default class Referee {
 			//initialPosition.x + (i * 0) [MIDDLE]
 
 			if (samePosition(passedPosition, desiredPosition)) {
-				if (this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+				if (tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
 					return true;
 				}
 			} else {
@@ -212,7 +185,7 @@ export default class Referee {
 			//initialPosition.x + (i * 0) [MIDDLE]
 
 			if (samePosition(passedPosition, desiredPosition)) {
-				if (this.tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
+				if (tileIsEmptyOrOccupiedByOpponent(passedPosition, boardState, team)) {
 					return true;
 				}
 			} else {
@@ -249,7 +222,7 @@ export default class Referee {
 				pawnMove(initialPosition, desiredPosition, team, boardState);
 				break;
 			case PieceType.KNIGHT:
-				this.knightMove(initialPosition, desiredPosition, team, boardState);
+				knightMove(initialPosition, desiredPosition, team, boardState);
 				break;
 			case PieceType.BISHOP:
 				this.bishopMove(initialPosition, desiredPosition, team, boardState);
