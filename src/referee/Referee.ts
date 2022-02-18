@@ -70,5 +70,6 @@ export default class Referee {
 				kingMove(initialPosition, desiredPosition, team, boardState);
 				// LAST CASE SO NO BREAK NO NO
 		}
+		return false;
 	}
 }
